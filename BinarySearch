@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define COUNT 10000
+typedef struct {
+	int id;
+	int jap;
+	int math;
+	int en;
+}SCORE;
+
+int  main (void){
+	
+	FILE* fp;
+	int i=0;
+	int sid;
+	if((fp=fopen("score.txt","r"))==NULL){
+		printf("FAIL\n");
+		exit(-1);
+	}
+		SCORE score[COUNT];
+	while(fscanf(fp,"%d %d %d %d",&score[i].id,&score[i].jap,&score[i].math,&score[i].en)!=EOF){
+		i++;
+	}
+	fclose(fp);
+	int m = COUNT/2;
+	int l = 0;
+	int r = COUNT;
+	printf("学生番号を入力してください");
+	scanf("%d",&sid);
+	while(sid!=m){
+		if (m == sid){
+			break;
+		}else if(m>sid){
+			r = m-1;
+			m = (l + r)/2;
+		}else if(m<sid){
+			l = m + 1;
+			m = (l + r)/2;
+		}
+	}
+	printf("学生番号 国語 数学 英語\n");
+	printf("%-7d %3d %3d %4d\n",score[m].id,score[m].jap,score[m].math,score[m].en);
+	return 0;
+}
