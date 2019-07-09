@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include<string.h>
+typedef struct {
+   char name[10];
+   int hp;
+   int curhp;
+   int attack;
+   int speed;
+   int attri;
+   int level;
+}CHARA;
+void kougeki(CHARA* a,CHARA* b);
+int damage(CHARA* of,CHARA* de);
+void kougeki(CHARA* a,CHARA* b){
+
+   CHARA* c;
+   CHARA* d;
+   if(a->speed>=b->speed){
+       c=a;
+       d=b;
+   }else{
+       c=b;
+       d=a;
+   }
+   while(c->curhp>0&&d->curhp>0){
+   int dam = damage(c,d);
+   d->curhp= d->curhp - dam;
+   printf("%sに%dのダメージ！\n",d->name,dam);
+   dam = damage(d,c);
+   c->curhp = c->curhp - dam;
+   printf("%sに%dのダメージ！\n",c->name,dam);
+   }
+   if(c->curhp>0){
+       printf("%sの勝ち\n",c->name);
+   }else if(d->curhp>0){
+       printf("%sの勝ち\n",d->name);
+   }
+}
+int damage(CHARA* of,CHARA* de){
+//0は火1は水2は木
+    if((of->attri==1&&de->attri==0)||(of->attri==2&&de->attri==1)||(of->attri==0&&de->attri==2)){
+        of->attack= of->attack*4/3;
+    }else if((of->attri==0&&de->attri==1)||(of->attri==1&&de->attri==2)||(of->attri==2&&de->attri==0)){
+        of->attack= of->attack*3/4;
+    }
+    return of->attack;
+}
+ int main (void){
+     
+     CHARA mainch ;
+     char namae[11];
+     CHARA* mp = &mainch;
+     int type =3;
+     printf("名前を入力してください(10文字まで)：");
+     scanf("%s",namae);
+     printf("タイプを決めます。\n何タイプがいいですか？(体力タイプ=0/攻撃タイプ=1/スピードタイプ=2):");
+     while(type!=0||type!=1||type!=2){
+         scanf("%d",&type);
+         
+         if(type==0||type==1||type==2){
+             break;
+         } else{
+             printf("0か1か2を入力して下さい\n");
+         }
+     }
+     srand((unsigned)time(0UL));
+     int r = rand()%3;
+     switch (type){
+         case 0:
+             strcpy(mainch.name, namae);             
+             mainch.hp=25;
+             mainch.curhp=25;
+             mainch.attack=6;
+             mainch.speed=5;
+             mainch.attri=r;
+             mainch.level=1;
+             break;
+         case 1:
+             strcpy(mainch.name, namae);                    
+             mainch.hp=21;
+             mainch.curhp=21;
+             mainch.attack=8;
+             mainch.speed=6;
+             mainch.attri=r;
+             mainch.level=1;
+
+             break;
+         case 2:
+            strcpy(mainch.name, namae);       
+             mainch.hp=21;
+             mainch.curhp=21;
+             mainch.attack=6;
+             mainch.speed=8;
+             mainch.attri=r;
+             mainch.level=1;
+
+             break;
+               
+     }
+     char attr[2];
+     switch (r){
+         case 0:  
+          strcpy(attr, "火"); 
+               break;
+         case 1:
+            strcpy(attr,"水"); 
+            break;
+         case 2:    
+           strcpy(attr,"草"); 
+            break;
+     }
+     printf("あなたのモンスターの名前と能力は\\n");
+     printf("名前：%s\nHP：%d\n攻撃力：%d\nスピード：%d\n属性：%s\nレベル：%d\n",mainch.name,mainch.hp,
+     mainch.attack,mainch.speed,attr,mainch.level);
+     //敵の属性は3のみ
+     CHARA  mon1 = {"たこ",14,14,3,2,3,1};
+     CHARA* mons1 = &mon1;
+     kougeki(mp,mons1);    
+     return 0;
+ }
