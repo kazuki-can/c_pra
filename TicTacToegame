@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author hidakazuki
+ * @author kazuki
  */
 public class NoughtsandCrosses extends javax.swing.JFrame {
 
