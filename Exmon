@@ -49,7 +49,7 @@ int damage(CHARA* of,CHARA* de){
 }
  int main (void){
      
-     CHARA mainch ;
+     CHARA mainch;
      char namae[11];
      CHARA* mp = &mainch;
      int type =3;
